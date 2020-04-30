@@ -217,17 +217,17 @@ def user_stats(df, city):
 def show_raw_data(df):
     """
     Asks if the user would like to see some lines of data from the filtered dataset.
-    Displays 5 (show_rows) lines, then asks if they would like to see 5 more.
+    Displays 6 (display_rows) lines, then asks if they would like to see 5 more.
     Continues asking until they say stop.
     """
-    display_rows = 5
+    display_rows = 6
     row_start = 0
     row_end = display_rows - 1    
 
     print('\n    Would you like to see some raw data from the current dataset?')
     while True:
-        reply = input('(yes or no):  ')
-        if reply.lower() == 'yes':
+        reply = input('(y or n):  ')
+        if reply.lower() == 'y':
             
             print('\n    Displaying rows {} to {}:'.format(row_start + 1, row_end + 1))
 
