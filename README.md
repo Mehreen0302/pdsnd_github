@@ -1,5 +1,5 @@
 ### Date created
-I created this project and README file on 30th of April.
+I created this project and README file on 1st of May.
 
 ### Project Title
 Explore US Bikeshare Data
@@ -10,5 +10,6 @@ Calculate statistics and build an interactive environment where a user chooses t
 ### Files used
 Bikeshare.py, README.txt
 
-
+### Comments
+this is refactoring 
 
