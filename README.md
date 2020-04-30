@@ -11,7 +11,7 @@ Calculate statistics and build an interactive environment where a user chooses t
 Bikeshare.py, README.txt
 
 ### Comments
-This is Documentation branch.
+This is a Documentation branch.
 
 ### info
 Message- changes done
