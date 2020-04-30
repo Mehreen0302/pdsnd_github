@@ -226,7 +226,7 @@ def show_raw_data(df):
 
     print('\n    Would you like to see some raw data from the current dataset?')
     while True:
-        reply = input('(y or n):  ')
+        reply = input('(Enter y or n):  ')
         if reply.lower() == 'y':
             
             print('\n    Displaying rows {} to {}:'.format(row_start + 1, row_end + 1))
