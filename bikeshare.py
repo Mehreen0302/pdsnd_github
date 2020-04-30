@@ -217,7 +217,7 @@ def user_stats(df, city):
 def show_raw_data(df):
     """
     Asks if the user would like to see some lines of data from the filtered dataset.
-    Displays 6 (display_rows) lines, then asks if they would like to see 5 more.
+    Displays 6 (display_rows) lines of data, then asks if they would like to see 6 more.
     Continues asking until they say stop.
     """
     display_rows = 6
