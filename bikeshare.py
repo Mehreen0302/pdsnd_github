@@ -6,12 +6,12 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
 
-Month_Lookup = {"January":31,
-                "February":28,
-                "March":31,
-                "April":30,
-                "May":31,
-                "June":30}
+Month_Lookup = {"january":31,
+                "february":28,
+                "march":31,
+                "april":30,
+                "may":31,
+                "june":30}
 
 
 def get_filters():
@@ -28,7 +28,7 @@ def get_filters():
 
     flag= True
     while flag:
-        city = str(input('Enter the city you want to see the data for: chicago, washington, new york city?: '))
+        city = str(input('Enter the city you want to see the data for: chicago, washington, new york city?: ')).lower()
         for (key, value) in set(CITY_DATA.items()):
             if key ==city:
                 flag = False
@@ -46,6 +46,7 @@ def get_filters():
         flag= True
         while flag:
             month = str(input("enter the month you want to explore the data for? January, February, March, April, May, June: "))
+            month=month.lower()
             for (key, value) in set(Month_Lookup.items()):
                 if key ==month:
                     flag = False
@@ -64,7 +65,7 @@ def get_filters():
     elif filters == 'both':
         flag= True
         while flag:
-            month = str(input("enter the month you want to explore the data for? January, February, March, April, May, June: "))
+            month = str(input("enter the month you want to explore the data for? January, February, March, April, May, June: ")).lower()
             for (key, value) in set(Month_Lookup.items()):
                 if key ==month:
                     flag = False
@@ -76,7 +77,7 @@ def get_filters():
         while flag:
             day = int(input("which day? Please give response as an Integer: "))
             for (key, value) in set(Month_Lookup.items()):
-                if key ==month and day <= value and day >=1:
+                if key ==month and day<= value and day >=1:
                     flag = False
                     break
             if flag:
@@ -112,9 +113,9 @@ def load_data(filters, city, month, day):
     df['month'] = df['Start Time'].dt.month_name()
     df['day'] = df['Start Time'].dt.day
     df['day_of_week'] = df['Start Time'].dt.day_name()
-
+    
     if month !=-1:
-        df = df.loc[df['month'] == month] 
+        df = df.loc[df['month'].str.lower() == month] 
     if day !=-1:
         df = df.loc[df['day'] == day]
         
@@ -197,24 +198,48 @@ def user_stats(df, city):
     if city =='new york city' or city == 'chicago':
             g=df['Gender'].value_counts()
             print('count of each user type: '+str(g) )
-    else:
-        return
 
     # TO DO: Display earliest, most recent, and most common year of birth
-    e=df['Birth Year'].min()
-    r=df['Birth Year'].max()
-    comm=df['Birth Year'].mode()
-    print(comm.dtype)
-    print('earliest year of birth: '+str(e) )
-    print('most recent year of birth: '+str(r) )
-    print('most common year of birth: '+ str(comm))
+            e=df['Birth Year'].min()
+            r=df['Birth Year'].max()
+            comm=df['Birth Year'].mode()
+            print(comm.dtype)
+            print('earliest year of birth: '+str(e) )
+            print('most recent year of birth: '+str(r) )
+            print('most common year of birth: '+ str(comm))
 
-
+    else:
+        return
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+def show_raw_data(df):
+    """
+    Asks if the user would like to see some lines of data from the filtered dataset.
+    Displays 5 (show_rows) lines, then asks if they would like to see 5 more.
+    Continues asking until they say stop.
+    """
+    display_rows = 5
+    row_start = 0
+    row_end = display_rows - 1    
 
+    print('\n    Would you like to see some raw data from the current dataset?')
+    while True:
+        reply = input('(yes or no):  ')
+        if reply.lower() == 'yes':
+            
+            print('\n    Displaying rows {} to {}:'.format(row_start + 1, row_end + 1))
+
+            print('\n', df.iloc[row_start : row_end + 1])
+            row_start += display_rows
+            row_end += display_rows
+
+            print('\n    Would you like to see the next {} rows?'.format(display_rows))
+            continue
+        else:
+            break
+    
 def main():
     while True:
         filters, city, month, day = get_filters()
@@ -224,6 +249,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df, city)
+        show_raw_data(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
